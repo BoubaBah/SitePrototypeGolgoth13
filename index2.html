@@ -1,0 +1,1741 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Golgoth13 Basketball Club</title>
+    <style>
+      :root {
+        --primary: #d4af37;
+        --secondary: #000000;
+        --light: #ffffff;
+        --gold-gradient: linear-gradient(45deg, #d4af37, #ffd700);
+        --dark-bg: #000000;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Helvetica Neue", sans-serif;
+      }
+
+      body {
+        background-color: var(--dark-bg);
+        color: var(--light);
+      }
+
+      .header {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url("https://images.unsplash.com/photo-1546519638-68e109498ffc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YmFza2V0YmFsbHx8fHx8fDE2MjY4NjQ0MDE&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080")
+            center/cover;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--light);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .logo {
+        font-size: 4.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        animation: logoFloat 3s ease-in-out infinite;
+      }
+
+      @keyframes logoFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background: linear-gradient(to top, var(--secondary), transparent);
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        padding: 1.2rem;
+        z-index: 100;
+        border-bottom: 2px solid var(--primary);
+        transition: all 0.3s ease;
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      nav ul li a {
+        color: var(--light);
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      nav ul li a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background: var(--gold-gradient);
+        transition: width 0.3s;
+      }
+
+      nav ul li a:hover::after {
+        width: 100%;
+      }
+
+      .mobile-menu-btn {
+        display: none; /* Hidden by default */
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+
+      /* Inside your existing @media query for mobile screens */
+      @media screen and (max-width: 768px) {
+        .mobile-menu-btn {
+          display: block; /* Only show on mobile */
+        }
+      }
+
+      /* Add specific styles for desktop */
+      @media screen and (min-width: 769px) {
+        .mobile-menu-btn {
+          display: none; /* Explicitly hide on desktop */
+        }
+
+        nav ul {
+          display: flex !important; /* Always show menu on desktop */
+        }
+      }
+
+      .section {
+        padding: 8rem 2rem;
+        position: relative;
+      }
+
+      .section:nth-child(even) {
+        background-color: #111111;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 3.5rem;
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 4rem;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: var(--gold-gradient);
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .team-card {
+        position: relative;
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .team-card-image {
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .team-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .team-card:hover .team-card-image img {
+        transform: scale(1.1) rotate(2deg);
+      }
+
+      .team-card-content {
+        padding: 2rem;
+        width: 100%;
+        text-align: left;
+      }
+
+      .team-card h3 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .team-card .role {
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      .team-card .role::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: var(--gold-gradient);
+      }
+
+      .team-achievements {
+        list-style: none;
+        margin-top: 1.5rem;
+      }
+
+      .team-achievements li {
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .team-achievements li::before {
+        content: "🏆";
+        color: var(--primary);
+      }
+
+      .news-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+        padding: 2rem;
+      }
+
+      .news-card {
+        position: relative;
+        background-color: #111111;
+        color: var(--light);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+        border: 1px solid rgba(212, 175, 55, 0.1);
+      }
+
+      .news-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        border-color: var(--primary);
+      }
+
+      .news-image-container {
+        position: relative;
+        overflow: hidden;
+        height: 300px;
+      }
+
+      .news-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+
+      .news-card:hover img {
+        transform: scale(1.1);
+      }
+
+      .news-content {
+        padding: 2rem;
+      }
+
+      .news-date {
+        color: var(--primary);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .news-category {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--gold-gradient);
+        color: var(--secondary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+
+      .news-content h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+      }
+
+      .news-content p {
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .news-stats {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        color: var(--primary);
+        font-size: 0.9rem;
+      }
+
+      .news-stats span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      footer {
+        background-color: var(--secondary);
+        color: var(--light);
+        text-align: center;
+        padding: 4rem 2rem;
+        border-top: 3px solid var(--primary);
+      }
+
+      .btn {
+        background: var(--gold-gradient);
+        color: var(--secondary);
+        padding: 1rem 2.5rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+      }
+
+      .btn::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .btn:hover::after {
+        transform: translateX(0);
+      }
+
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .stat-box {
+        background: var(--gold-gradient);
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        color: var(--secondary);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .training-programs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .program-card {
+        background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+        color: var(--light);
+        border-radius: 15px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transition: all 0.4s ease;
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .program-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 15px 30px rgba(212, 175, 55, 0.1);
+      }
+
+      .program-card h3 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      .program-card h3::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--gold-gradient);
+      }
+
+      .program-card ul {
+        list-style: none;
+        margin: 1.5rem 0;
+      }
+
+      .program-card ul li {
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        position: relative;
+        padding-left: 1.5rem;
+      }
+
+      .program-card ul li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+      }
+
+      .program-card .program-footer {
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .program-price {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .facilities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .facility-card {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        height: 300px;
+      }
+
+      .facility-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        color: white;
+      }
+
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.1;
+        pointer-events: none;
+      }
+
+      .basketball {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: var(--gold-gradient);
+        border-radius: 50%;
+        animation: bounce 10s infinite;
+      }
+
+      @keyframes bounce {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        25% {
+          transform: translate(100vw, 50vh) rotate(180deg);
+        }
+        50% {
+          transform: translate(50vw, 100vh) rotate(360deg);
+        }
+        75% {
+          transform: translate(0, 50vh) rotate(540deg);
+        }
+        100% {
+          transform: translate(0, 0) rotate(720deg);
+        }
+      }
+
+      .scores-table {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background: #111111;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .scores-table th,
+      .scores-table td {
+        padding: 1.5rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      }
+
+      .scores-table th {
+        background: var(--gold-gradient);
+        color: var(--secondary);
+        font-weight: bold;
+      }
+
+      .scores-table tr:hover {
+        background: rgba(212, 175, 55, 0.1);
+      }
+
+      .license-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .license-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 500px;
+        padding: 2.5rem;
+        background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+        border: 2px solid rgba(212, 175, 55, 0.3);
+      }
+
+      .license-card h3 {
+        font-size: 1.8rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        position: relative;
+      }
+
+      .license-card h3::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--gold-gradient);
+      }
+
+      .license-card .price {
+        font-size: 3rem;
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+        margin: 1.5rem 0;
+      }
+
+      .license-card ul {
+        list-style: none;
+        margin: 1.5rem 0;
+      }
+
+      .license-card ul li {
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        position: relative;
+        padding-left: 1.5rem;
+      }
+
+      .license-card ul li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+      }
+
+      .license-card .btn {
+        margin-top: auto;
+        align-self: center;
+      }
+
+      .license-card:hover {
+        transform: translateY(-15px);
+        border-color: var(--primary);
+      }
+
+      .license-badge {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        background: var(--gold-gradient);
+        color: var(--secondary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+
+      /* Mobile Navigation */
+      @media screen and (max-width: 768px) {
+        /* Navigation improvements */
+        nav {
+          padding: 0.8rem;
+          position: fixed;
+          top: 0;
+          width: 100%;
+          z-index: 1000;
+        }
+
+        nav ul {
+          flex-direction: column;
+          gap: 1rem;
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: rgba(0, 0, 0, 0.95);
+          padding: 2rem 0;
+          text-align: center;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul.active {
+          display: flex;
+        }
+
+        nav ul li a {
+          display: block;
+          padding: 1rem 2rem;
+          font-size: 1.2rem;
+        }
+
+        /* Header adjustments */
+        .header {
+          padding: 0 1rem;
+          text-align: center;
+          height: 100vh;
+        }
+
+        .logo {
+          font-size: 2.5rem;
+          padding: 0 1rem;
+          text-align: center;
+        }
+
+        /* Section adjustments */
+        .section {
+          padding: 4rem 1rem;
+        }
+
+        .section-title {
+          font-size: 2.5rem;
+          padding: 0 1rem;
+        }
+
+        /* Grid layouts adjustments */
+        .team-grid,
+        .training-programs,
+        .facilities-grid,
+        .news-container {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 1rem;
+        }
+
+        /* Card adjustments */
+        .team-card,
+        .program-card,
+        .license-card,
+        .news-card {
+          margin: 1rem 0;
+        }
+
+        /* Stats container adjustment */
+        .stats-container {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .stat-box {
+          padding: 1.5rem;
+        }
+
+        /* Table adjustments */
+        .scores-table {
+          display: block;
+          overflow-x: auto;
+          white-space: nowrap;
+          font-size: 0.9rem;
+          margin: 0 1rem;
+        }
+
+        .scores-table th,
+        .scores-table td {
+          padding: 0.8rem;
+        }
+      }
+
+      /* Tablet specific adjustments */
+      @media screen and (min-width: 769px) and (max-width: 1024px) {
+        .team-grid,
+        .training-programs,
+        .facilities-grid,
+        .news-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .stats-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .section-title {
+          font-size: 3rem;
+        }
+
+        .logo {
+          font-size: 3.5rem;
+        }
+      }
+
+      /* General touch improvements */
+      @media (hover: none) {
+        /* Improve touch targets */
+        nav ul li a,
+        .btn,
+        .team-card,
+        .program-card,
+        .license-card,
+        .news-card {
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn {
+          padding: 1.2rem 2.8rem;
+        }
+
+        /* Remove hover effects on mobile */
+        .news-card:hover,
+        .team-card:hover,
+        .program-card:hover,
+        .license-card:hover {
+          transform: none;
+        }
+      }
+
+      /* Add smooth scrolling to html */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Shop styles */
+      .shop-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .shop-card {
+        background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(212, 175, 55, 0.1);
+      }
+
+      .shop-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1);
+      }
+
+      .shop-image {
+        position: relative;
+        height: 300px;
+        background: #2a2a2a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .shop-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--gold-gradient);
+        color: var(--secondary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        z-index: 1;
+      }
+
+      .shop-favorite {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        width: 24px;
+        height: 24px;
+        color: var(--primary);
+        cursor: pointer;
+        z-index: 1;
+      }
+
+      .shop-content {
+        padding: 1.5rem;
+      }
+
+      .shop-content h3 {
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      .shop-description {
+        color: var(--light);
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .shop-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .shop-price {
+        font-size: 1.5rem;
+        color: var(--primary);
+        font-weight: bold;
+      }
+
+      .shop-sizes {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .shop-sizes span {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--primary);
+        border-radius: 50%;
+        color: var(--primary);
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .shop-sizes span:hover {
+        background: var(--gold-gradient);
+        color: var(--secondary);
+      }
+
+      .product-image {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+      }
+
+      /* Mobile adjustments */
+      @media screen and (max-width: 768px) {
+        .shop-container {
+          grid-template-columns: 1fr;
+          padding: 1rem;
+        }
+
+        .shop-card {
+          margin-bottom: 1rem;
+        }
+
+        .shop-image {
+          height: 250px;
+        }
+
+        .product-image {
+          width: 150px;
+          height: 150px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#equipe">Équipe</a></li>
+        <li><a href="#actualites">Actualités</a></li>
+        <li><a href="#billetterie">Billetterie</a></li>
+        <li><a href="#boutique">Boutique</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#licences">Licences</a></li>
+        <li><a href="#scores">Résultats</a></li>
+      </ul>
+    </nav>
+
+    <header class="header" id="accueil">
+      <h1 class="logo">Golgoth13</h1>
+      <p style="font-size: 1.5rem; margin-bottom: 2rem">
+        L'Excellence du Basketball Français
+      </p>
+      <button class="btn">Acheter vos billets</button>
+    </header>
+
+    <div class="animated-bg">
+      <div class="basketball"></div>
+    </div>
+
+    <section class="section">
+      <h2 class="section-title">Nos Chiffres Clés</h2>
+      <div class="stats-container">
+        <div class="stat-box">
+          <div class="stat-number">1500+</div>
+          <p>Licenciés</p>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">25</div>
+          <p>Années d'existence</p>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">12</div>
+          <p>Titres majeurs</p>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">8</div>
+          <p>Équipes jeunes</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="equipe">
+      <h2 class="section-title">Notre Équipe</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-card-image">
+            <img
+              src="https://images.unsplash.com/photo-1519861531473-9200262188bf"
+              alt="Équipe professionnelle Golgoth13 en action sur le terrain"
+              width="300"
+              height="250"
+            />
+          </div>
+          <div class="team-card-content">
+            <h3>Équipe Pro</h3>
+            <p>Division Pro B</p>
+            <p>Une équipe d'élite visant l'excellence</p>
+            <ul class="team-achievements">
+              <li>Champion Pro B 2022</li>
+              <li>Finaliste Coupe de France 2023</li>
+              <li>Leader du championnat actuel</li>
+              <li>Meilleure attaque du championnat</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-card-image">
+            <img
+              src="https://images.unsplash.com/photo-1519311965067-36d3e5f33d39"
+              alt="Jeunes joueurs du centre de formation Golgoth13 à l'entraînement"
+              width="300"
+              height="250"
+            />
+          </div>
+          <div class="team-card-content">
+            <h3>Centre de Formation</h3>
+            <p>U18 Élite</p>
+            <p>La pépinière des futures stars</p>
+            <ul class="team-achievements">
+              <li>Label club formateur excellence</li>
+              <li>Champion de France U18 2022</li>
+              <li>5 joueurs en équipe de France jeunes</li>
+              <li>Partenariat avec 3 lycées sportifs</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-card-image">
+            <img
+              src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e"
+              alt="Jeunes talents de l'Academy Golgoth13 pendant une session d'entraînement"
+              width="300"
+              height="250"
+            />
+          </div>
+          <div class="team-card-content">
+            <h3>Academy Golgoth13</h3>
+            <p>6-16 ans</p>
+            <p>L'avenir du basketball français</p>
+            <ul class="team-achievements">
+              <li>Programme élite personnalisé</li>
+              <li>Encadrement diplômé d'État</li>
+              <li>Suivi scolaire renforcé</li>
+              <li>Stage de perfectionnement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Notre Direction</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-card-image">
+            <img
+              src="https://images.unsplash.com/photo-1560250097-0b93528c311a"
+              alt="Portrait professionnel de Jean Dupont, Président de Golgoth13"
+              width="300"
+              height="250"
+            />
+          </div>
+          <div class="team-card-content">
+            <h3>Jean Dupont</h3>
+            <p
+              class="role"
+              style="
+                color: var(--primary);
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+              "
+            >
+              Président
+            </p>
+            <p>Plus de 25 ans d'expérience dans le basketball professionnel</p>
+            <ul class="team-achievements">
+              <li>Ancien joueur professionnel</li>
+              <li>Président depuis 2015</li>
+              <li>Membre du comité directeur FFBB</li>
+              <li>Vision stratégique innovante</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-card-image">
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2"
+              alt="Portrait professionnel de Marie Laurent, Directrice Sportive"
+              width="300"
+              height="250"
+            />
+          </div>
+          <div class="team-card-content">
+            <h3>Marie Laurent</h3>
+            <p
+              class="role"
+              style="
+                color: var(--primary);
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+              "
+            >
+              Directrice Sportive
+            </p>
+            <p>Expertise en développement des talents</p>
+            <ul class="team-achievements">
+              <li>Ex-internationale française</li>
+              <li>Master en Management Sportif</li>
+              <li>Coordinatrice du centre de formation</li>
+              <li>Expertise en détection de talents</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-card-image">
+            <img
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
+              alt="Portrait professionnel de Pierre Martin, Directeur Technique"
+              width="300"
+              height="250"
+            />
+          </div>
+          <div class="team-card-content">
+            <h3>Pierre Martin</h3>
+            <p
+              class="role"
+              style="
+                color: var(--primary);
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+              "
+            >
+              Directeur Technique
+            </p>
+            <p>Expert en formation et développement</p>
+            <ul class="team-achievements">
+              <li>Diplômé BE2 Basketball</li>
+              <li>15 ans d'expérience en formation</li>
+              <li>Responsable académie jeunes</li>
+              <li>Formateur FFBB</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Nos Programmes d'Entraînement</h2>
+      <div class="training-programs">
+        <div class="program-card">
+          <div class="program-badge">ÉLITE</div>
+          <h3>Programme Élite</h3>
+          <p>
+            Entraînement intensif pour les joueurs aspirant au plus haut niveau
+          </p>
+          <ul>
+            <li>6 séances d'entraînement hebdomadaires</li>
+            <li>Préparation physique personnalisée</li>
+            <li>Suivi nutritionnel et médical</li>
+            <li>Analyse vidéo personnalisée</li>
+            <li>Coaching mental</li>
+            <li>Accès illimité aux installations</li>
+            <li>Participation aux tournois nationaux</li>
+            <li>Équipement premium offert</li>
+          </ul>
+          <div class="program-footer">
+            <div class="program-price">350€/mois</div>
+            <button class="btn">S'inscrire maintenant</button>
+          </div>
+        </div>
+
+        <div class="program-card">
+          <div class="program-badge">FORMATION</div>
+          <h3>Formation Jeunes</h3>
+          <p>Développement des fondamentaux et progression technique</p>
+          <ul>
+            <li>4 séances hebdomadaires</li>
+            <li>Accompagnement scolaire personnalisé</li>
+            <li>Tournois régionaux et nationaux</li>
+            <li>Stage pendant les vacances</li>
+            <li>Suivi de progression individuel</li>
+            <li>Préparation physique adaptée</li>
+            <li>Équipement d'entraînement fourni</li>
+            <li>Transport pour les compétitions</li>
+          </ul>
+          <div class="program-footer">
+            <div class="program-price">250€/mois</div>
+            <button class="btn">S'inscrire maintenant</button>
+          </div>
+        </div>
+
+        <div class="program-card">
+          <div class="program-badge">LOISIR</div>
+          <h3>Basket Loisir</h3>
+          <p>Pour le plaisir du jeu et la convivialité</p>
+          <ul>
+            <li>2 séances hebdomadaires flexibles</li>
+            <li>Matchs amicaux réguliers</li>
+            <li>Événements club mensuels</li>
+            <li>Accès aux installations</li>
+            <li>Programme fitness inclus</li>
+            <li>Équipement de base fourni</li>
+            <li>Ambiance conviviale garantie</li>
+            <li>Tarifs famille disponibles</li>
+          </ul>
+          <div class="program-footer">
+            <div class="program-price">150€/mois</div>
+            <button class="btn">S'inscrire maintenant</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Nos Installations</h2>
+      <div class="facilities-grid">
+        <div
+          class="facility-card"
+          style="
+            background: url('https://images.unsplash.com/photo-1504450758481-7338eba7524a')
+              center/cover;
+          "
+        >
+          <div class="facility-content">
+            <h3>Terrain Principal</h3>
+            <p>Capacité de 3000 places</p>
+          </div>
+        </div>
+        <div
+          class="facility-card"
+          style="
+            background: url('https://images.unsplash.com/photo-1526232761682-d26e03ac148e')
+              center/cover;
+          "
+        >
+          <div class="facility-content">
+            <h3>Salle d'Entraînement</h3>
+            <p>4 terrains annexes</p>
+          </div>
+        </div>
+        <div
+          class="facility-card"
+          style="
+            background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48')
+              center/cover;
+          "
+        >
+          <div class="facility-content">
+            <h3>Centre de Formation</h3>
+            <p>Équipements haute performance</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="actualites">
+      <h2 class="section-title">Actualités</h2>
+      <div class="news-container">
+        <div class="news-card">
+          <div class="news-category">Match</div>
+          <div class="news-image-container">
+            <img
+              src="https://images.unsplash.com/photo-1519861531473-9200262188bf"
+              alt="Match de basketball en action, victoire dramatique contre Paris Basketball"
+              width="350"
+              height="300"
+            />
+          </div>
+          <div class="news-content">
+            <span class="news-date">15 Juin 2023</span>
+            <h3>Victoire Historique contre Paris Basketball</h3>
+            <p>
+              Une performance exceptionnelle de notre équipe qui nous rapproche
+              du titre avec une victoire 89-82. Le MVP du match, Thomas Martin,
+              a marqué 28 points et réalisé 10 rebonds.
+            </p>
+            <div class="news-stats">
+              <span>👁 2.5k vues</span>
+              <span>💬 18 commentaires</span>
+            </div>
+            <button class="btn">Lire la suite</button>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-category">Club</div>
+          <div class="news-image-container">
+            <img
+              src="https://images.unsplash.com/photo-1519861531473-9200262188bf"
+              alt="Recrutement 2024, nouveaux talents rejoignant l'équipe"
+              width="350"
+              height="300"
+            />
+          </div>
+          <div class="news-content">
+            <span class="news-date">12 Juin 2023</span>
+            <h3>Recrutement 2024: Nouveaux Talents</h3>
+            <p>
+              Découvrez nos nouvelles recrues pour la saison à venir. Trois
+              joueurs internationaux rejoignent l'effectif pour renforcer notre
+              équipe première.
+            </p>
+            <div class="news-stats">
+              <span>👁 1.8k vues</span>
+              <span>💬 24 commentaires</span>
+            </div>
+            <button class="btn">Lire la suite</button>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-category">Formation</div>
+          <div class="news-image-container">
+            <img
+              src="https://images.unsplash.com/photo-1519861531473-9200262188bf"
+              alt="Stage d'été pour jeunes basketteurs"
+              width="350"
+              height="300"
+            />
+          </div>
+          <div class="news-content">
+            <span class="news-date">10 Juin 2023</span>
+            <h3>Stage d'Été 2023</h3>
+            <p>
+              Inscriptions ouvertes pour notre stage d'été destiné aux 12-17
+              ans. Au programme : perfectionnement technique, préparation
+              physique et tournois.
+            </p>
+            <div class="news-stats">
+              <span>👁 1.2k vues</span>
+              <span>💬 12 commentaires</span>
+            </div>
+            <button class="btn">Lire la suite</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="licences">
+      <h2 class="section-title">Nos Licences</h2>
+      <div class="license-cards">
+        <div class="license-card">
+          <h3>Licence Jeunes</h3>
+          <div class="price">180€<span style="font-size: 1rem">/an</span></div>
+          <ul>
+            <li>Pour les 6-12 ans</li>
+            <li>2 entraînements/semaine</li>
+            <li>Kit complet d'équipement</li>
+            <li>Compétitions le weekend</li>
+            <li>Accès aux stages vacances</li>
+            <li>Suivi pédagogique</li>
+            <li>Licence FFBB incluse</li>
+            <li>Assurance sportive</li>
+          </ul>
+          <button class="btn">S'inscrire</button>
+        </div>
+        <div class="license-card" style="position: relative">
+          <div class="license-badge">POPULAIRE</div>
+          <h3>Licence Ados</h3>
+          <div class="price">220€<span style="font-size: 1rem">/an</span></div>
+          <ul>
+            <li>Pour les 13-17 ans</li>
+            <li>3 entraînements/semaine</li>
+            <li>Kit complet d'équipement premium</li>
+            <li>Compétitions niveau régional</li>
+            <li>Programme de développement personnalisé</li>
+            <li>Accès illimité aux stages</li>
+            <li>Suivi médical et nutritionnel</li>
+            <li>Licence FFBB incluse</li>
+            <li>Assurance sportive renforcée</li>
+          </ul>
+          <button class="btn">S'inscrire</button>
+        </div>
+        <div class="license-card">
+          <h3>Licence Adultes</h3>
+          <div class="price">250€<span style="font-size: 1rem">/an</span></div>
+          <ul>
+            <li>18 ans et plus</li>
+            <li>2-3 entraînements/semaine</li>
+            <li>Kit complet d'équipement</li>
+            <li>Championnat départemental</li>
+            <li>Accès à la salle de musculation</li>
+            <li>Séances coaching personnalisées</li>
+            <li>Events club privilégiés</li>
+            <li>Licence FFBB incluse</li>
+            <li>Assurance sportive complète</li>
+          </ul>
+          <button class="btn">S'inscrire</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="scores">
+      <h2 class="section-title">Derniers Résultats</h2>
+      <table class="scores-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Équipe</th>
+            <th>Adversaire</th>
+            <th>Score</th>
+            <th>Compétition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>15/06/2023</td>
+            <td>Golgoth13</td>
+            <td>Paris Basketball</td>
+            <td>89 - 82</td>
+            <td>Pro B</td>
+          </tr>
+          <tr>
+            <td>08/06/2023</td>
+            <td>Golgoth13</td>
+            <td>Nanterre 92</td>
+            <td>76 - 78</td>
+            <td>Coupe de France</td>
+          </tr>
+          <tr>
+            <td>01/06/2023</td>
+            <td>Golgoth13</td>
+            <td>Roanne</td>
+            <td>92 - 85</td>
+            <td>Pro B</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="boutique">
+      <h2 class="section-title">Notre Boutique</h2>
+      <div class="shop-container">
+        <div class="shop-card">
+          <div class="shop-image">
+            <div class="shop-badge">NOUVEAU</div>
+            <svg viewBox="0 0 24 24" class="shop-favorite">
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                fill="none"
+                stroke="currentColor"
+              />
+            </svg>
+            <div class="product-image" style="background-color: #2a2a2a">
+              <svg
+                viewBox="0 0 24 24"
+                style="width: 80%; height: 80%; margin: auto"
+              >
+                <path
+                  d="M20.5 6c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2zM12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="shop-content">
+            <h3>Maillot Domicile 2023/24</h3>
+            <p class="shop-description">
+              Maillot officiel de l'équipe, design exclusif
+            </p>
+            <div class="shop-details">
+              <div class="shop-price">79.99€</div>
+              <div class="shop-sizes">
+                <span>S</span>
+                <span>M</span>
+                <span>L</span>
+                <span>XL</span>
+              </div>
+            </div>
+            <button class="btn">Ajouter au panier</button>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-image">
+            <div class="shop-badge">POPULAIRE</div>
+            <svg viewBox="0 0 24 24" class="shop-favorite">
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                fill="none"
+                stroke="currentColor"
+              />
+            </svg>
+            <div class="product-image" style="background-color: #2a2a2a">
+              <svg
+                viewBox="0 0 24 24"
+                style="width: 80%; height: 80%; margin: auto"
+              >
+                <path
+                  d="M21 8.5c0-.83-.67-1.5-1.5-1.5h-3.37c-.82 0-1.5-.67-1.5-1.5V4H9.37C8.55 4 7.87 4.67 7.87 5.5v1.5c0 .83-.67 1.5-1.5 1.5H3c-.83 0-1.5.67-1.5 1.5v11c0 .83.67 1.5 1.5 1.5h16.5c.83 0 1.5-.67 1.5-1.5v-11z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="shop-content">
+            <h3>Short Officiel 2023/24</h3>
+            <p class="shop-description">
+              Short de match respirant avec logo brodé
+            </p>
+            <div class="shop-details">
+              <div class="shop-price">39.99€</div>
+              <div class="shop-sizes">
+                <span>S</span>
+                <span>M</span>
+                <span>L</span>
+                <span>XL</span>
+              </div>
+            </div>
+            <button class="btn">Ajouter au panier</button>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-image">
+            <svg viewBox="0 0 24 24" class="shop-favorite">
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                fill="none"
+                stroke="currentColor"
+              />
+            </svg>
+            <div class="product-image" style="background-color: #2a2a2a">
+              <svg
+                viewBox="0 0 24 24"
+                style="width: 80%; height: 80%; margin: auto"
+              >
+                <path
+                  d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="shop-content">
+            <h3>T-shirt d'Entraînement</h3>
+            <p class="shop-description">
+              T-shirt technique pour l'entraînement
+            </p>
+            <div class="shop-details">
+              <div class="shop-price">29.99€</div>
+              <div class="shop-sizes">
+                <span>S</span>
+                <span>M</span>
+                <span>L</span>
+                <span>XL</span>
+              </div>
+            </div>
+            <button class="btn">Ajouter au panier</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Golgoth13 Basketball Club</p>
+      <p>123 Rue du Sport, 75000 Paris</p>
+      <p>Email: contact@golgoth13basket.fr</p>
+      <p>Tél: 01 23 45 67 89</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const nav = document.querySelector("nav");
+        const mobileMenuBtn = document.createElement("button");
+        mobileMenuBtn.className = "mobile-menu-btn";
+        mobileMenuBtn.innerHTML = "☰";
+        nav.prepend(mobileMenuBtn);
+
+        const navMenu = document.querySelector("nav ul");
+
+        mobileMenuBtn.addEventListener("click", () => {
+          navMenu.classList.toggle("active");
+          mobileMenuBtn.innerHTML = navMenu.classList.contains("active")
+            ? "✕"
+            : "☰";
+        });
+
+        const navLinks = document.querySelectorAll("nav ul li a");
+        navLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            if (window.innerWidth <= 768) {
+              navMenu.classList.remove("active");
+              mobileMenuBtn.innerHTML = "☰";
+            }
+          });
+        });
+
+        // Improve scroll performance
+        let isScrolling;
+        window.addEventListener(
+          "scroll",
+          function () {
+            window.clearTimeout(isScrolling);
+            isScrolling = setTimeout(function () {
+              // Remove active state from menu when scrolling stops
+              const navMenu = document.querySelector("nav ul");
+              const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+              if (navMenu.classList.contains("active")) {
+                navMenu.classList.remove("active");
+                mobileMenuBtn.innerHTML = "☰";
+              }
+            }, 66);
+          },
+          false
+        );
+
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener(
+          "touchstart",
+          (e) => {
+            touchStartY = e.changedTouches[0].screenY;
+          },
+          false
+        );
+
+        document.addEventListener(
+          "touchend",
+          (e) => {
+            touchEndY = e.changedTouches[0].screenY;
+            if (Math.abs(touchStartY - touchEndY) > 50) {
+              // Close menu on significant vertical swipe
+              const navMenu = document.querySelector("nav ul");
+              const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+              navMenu.classList.remove("active");
+              mobileMenuBtn.innerHTML = "☰";
+            }
+          },
+          false
+        );
+
+        // Improve mobile menu button responsiveness
+        if (mobileMenuBtn) {
+          mobileMenuBtn.addEventListener("touchend", (e) => {
+            e.preventDefault();
+            const navMenu = document.querySelector("nav ul");
+            navMenu.classList.toggle("active");
+            mobileMenuBtn.innerHTML = navMenu.classList.contains("active")
+              ? "✕"
+              : "☰";
+          });
+        }
+
+        let ticking = false;
+        window.addEventListener("scroll", () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              if (window.scrollY > 50) {
+                nav.style.background = "rgba(0,0,0,0.95)";
+                nav.style.padding =
+                  window.innerWidth <= 768 ? "0.8rem" : "1rem";
+              } else {
+                nav.style.background = "rgba(0,0,0,0.8)";
+                nav.style.padding =
+                  window.innerWidth <= 768 ? "0.8rem" : "1.2rem";
+              }
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+
+        const animateOnScroll = function () {
+          const cards = document.querySelectorAll(".team-card, .news-card");
+          cards.forEach((card) => {
+            const cardTop = card.getBoundingClientRect().top;
+            if (cardTop < window.innerHeight * 0.8) {
+              card.style.opacity = "1";
+              card.style.transform = "translateY(0)";
+            }
+          });
+        };
+
+        window.addEventListener("scroll", animateOnScroll);
+
+        const stats = document.querySelectorAll(".stat-number");
+        stats.forEach((stat) => {
+          const target = parseInt(stat.innerText);
+          let current = 0;
+          const increment = target / 50;
+          const updateCount = () => {
+            if (current < target) {
+              current += increment;
+              stat.innerText = Math.ceil(current);
+              setTimeout(updateCount, 20);
+            } else {
+              stat.innerText = target;
+            }
+          };
+          updateCount();
+        });
+
+        const animatedBg = document.querySelector(".animated-bg");
+        for (let i = 0; i < 5; i++) {
+          const basketball = document.createElement("div");
+          basketball.className = "basketball";
+          basketball.style.left = Math.random() * 100 + "vw";
+          basketball.style.top = Math.random() * 100 + "vh";
+          basketball.style.animationDelay = i * 2 + "s";
+          animatedBg.appendChild(basketball);
+        }
+      });
+    </script>
+  </body>
+</html>
